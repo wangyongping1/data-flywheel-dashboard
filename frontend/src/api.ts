@@ -119,6 +119,22 @@ export interface EvaluationsResponse {
   leaderboard: LeaderboardEntry[];
 }
 
+export interface VerticalEvalSummary {
+  total_sessions: number;
+  total_trials: number;
+  best_accuracy: number;
+  best_config: { agent: string; model: string; task: string } | null;
+  last_eval_at: string | null;
+}
+
+export interface VerticalEvaluationsResponse {
+  generated_at: string;
+  source: SourceLabel;
+  sessions: EvalSession[];
+  leaderboard: LeaderboardEntry[];
+  summary: VerticalEvalSummary;
+}
+
 export interface ObservationBucket {
   date: string;
   traces: number;
@@ -188,6 +204,7 @@ export const api = {
   pipeline: () => fetchJSON<PipelineResponse>("/api/flywheel/pipeline"),
   events: () => fetchJSON<EventsResponse>("/api/flywheel/events"),
   evaluations: () => fetchJSON<EvaluationsResponse>("/api/flywheel/evaluations"),
+  verticalEvaluations: () => fetchJSON<VerticalEvaluationsResponse>("/api/flywheel/evaluations/vertical"),
   observations: () => fetchJSON<ObservationsResponse>("/api/flywheel/observations"),
   training: () => fetchJSON<TrainingDetailResponse>("/api/flywheel/training"),
 };

@@ -27,6 +27,11 @@ def flywheel_evaluations():
     return aggregator.get_evaluations()
 
 
+@router.get("/evaluations/vertical")
+def flywheel_vertical_evaluations():
+    return aggregator.get_vertical_evaluations()
+
+
 @router.get("/observations")
 def flywheel_observations():
     return aggregator.get_observations()

@@ -5,11 +5,12 @@ services:
     ports:
       - "8000:8000"
     volumes:
-      - ./data:/app/data
+      # 数据文件挂到 /app/project_data，避免覆盖 backend/data/ 这个 Python 包
+      - ./data:/app/project_data
       - ${TRAINING_DIR:-./training}:/data/training
     environment:
       - FLYWHEEL_ROOT=/app
-      - FLYWHEEL_DATA_DIR=/app/data
+      - FLYWHEEL_DATA_DIR=/app/project_data
       - TRAINING_DIR=/data/training
       - AI_ANNOTATOR_API_KEY=${AI_ANNOTATOR_API_KEY:-}
       - AI_ANNOTATOR_API_BASE=${AI_ANNOTATOR_API_BASE:-https://api.deepseek.com/v1}
