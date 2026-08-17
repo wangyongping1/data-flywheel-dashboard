@@ -1,0 +1,21 @@
+# Unsloth Training Configuration for Data Flywheel
+
+model_name: "unsloth/llama-3-8b"
+training_type: "lora"           # "lora" or "full"
+num_epochs: 3
+learning_rate: 0.0002
+batch_size: 2
+lora_r: 16
+lora_alpha: 32
+max_seq_length: 2048
+load_in_4bit: true
+
+# Dataset source (relative to project root)
+dataset_path: "../data/outputs/langfuse_pipeline/training_dataset.jsonl"
+
+# Output
+output_dir: "training/runs"
+
+# Logging
+report_to: "tensorboard"
+enable_wandb: false

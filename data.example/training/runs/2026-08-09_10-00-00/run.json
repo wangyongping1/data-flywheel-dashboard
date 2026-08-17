@@ -1,0 +1,27 @@
+{
+  "model": "unsloth/llama-3-8b",
+  "command": "python training/runs/2026-08-09_10-00-00/train_unsloth.py",
+  "dataset_path": "training/alpaca_dataset.json",
+  "config": {
+    "model_name": "unsloth/llama-3-8b",
+    "training_type": "lora",
+    "num_epochs": 3,
+    "learning_rate": 0.0002,
+    "batch_size": 2,
+    "lora_r": 16,
+    "lora_alpha": 32,
+    "max_seq_length": 2048,
+    "load_in_4bit": true,
+    "dataset_path": "../data/outputs/langfuse_pipeline/training_dataset.jsonl",
+    "output_dir": "training/runs",
+    "report_to": "tensorboard",
+    "enable_wandb": false,
+    "dry_run": true
+  },
+  "output_dir": "training/runs/2026-08-09_10-00-00/model",
+  "script_path": "training/runs/2026-08-09_10-00-00/train_unsloth.py",
+  "status": "dry_run",
+  "metrics": {},
+  "run_id": "2026-08-09_10-00-00",
+  "recorded_at": "2026-08-09T10:00:00.000000+00:00"
+}

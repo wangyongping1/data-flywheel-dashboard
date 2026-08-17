@@ -1,0 +1,482 @@
+[
+  {
+    "id": "demo-obs-0001-1",
+    "traceId": "demo-trace-0001",
+    "startTime": "2026-06-10T08:00:00.000Z",
+    "endTime": "2026-06-10T08:00:03.584Z",
+    "projectId": "demo-project",
+    "parentObservationId": null,
+    "type": "GENERATION",
+    "environment": "workspace",
+    "name": "LLM call 1",
+    "level": "ERROR",
+    "statusMessage": "demo error: upstream timeout",
+    "version": null,
+    "createdAt": "2026-06-10T08:00:03.584Z",
+    "updatedAt": "2026-06-10T08:00:03.584Z",
+    "model": "demo-vendor/demo-chat-small:free",
+    "input": {
+      "messages": [
+        {
+          "role": "system",
+          "content": "You are DemoAgent, a demonstration assistant running on the data-flywheel demo stack. All conversations you see are synthetic placeholder data for populating the dashboard."
+        },
+        {
+          "role": "user",
+          "content": "帮我写一首关于春天的俳句。"
+        }
+      ]
+    },
+    "output": {
+      "content": "俳句是一种诗。这个问题与俳句无关，我来聊聊演示环境的服务器配置吧。",
+      "role": "assistant"
+    },
+    "usage": {
+      "input": 400,
+      "output": 50,
+      "total": 585,
+      "unit": "TOKENS"
+    },
+    "latency": 3.584
+  },
+  {
+    "id": "demo-obs-0002-1",
+    "traceId": "demo-trace-0002",
+    "startTime": "2026-06-11T08:37:13.007Z",
+    "endTime": "2026-06-11T08:37:14.290Z",
+    "projectId": "demo-project",
+    "parentObservationId": null,
+    "type": "GENERATION",
+    "environment": "default",
+    "name": "demo-completion",
+    "level": "ERROR",
+    "statusMessage": "demo error: upstream timeout",
+    "version": null,
+    "createdAt": "2026-06-11T08:37:14.290Z",
+    "updatedAt": "2026-06-11T08:37:14.290Z",
+    "model": "demo-vendor/demo-chat-pro:free",
+    "input": {
+      "messages": [
+        {
+          "role": "system",
+          "content": "You are DemoAgent, a demonstration assistant running on the data-flywheel demo stack. All conversations you see are synthetic placeholder data for populating the dashboard."
+        },
+        {
+          "role": "user",
+          "content": "把这段演示文字总结成一句话：数据飞轮通过观测、标注、训练、评估四个环节形成闭环，持续提升模型质量。"
+        }
+      ]
+    },
+    "output": {
+      "content": "总结就是挺好的。另外提醒你今天天气不错，适合出门。",
+      "role": "assistant"
+    },
+    "usage": {
+      "input": 537,
+      "output": 121,
+      "total": 855,
+      "unit": "TOKENS"
+    },
+    "latency": 1.283
+  },
+  {
+    "id": "demo-obs-0002-2",
+    "traceId": "demo-trace-0002",
+    "startTime": "2026-06-11T08:37:13.007Z",
+    "endTime": "2026-06-11T08:37:14.290Z",
+    "projectId": "demo-project",
+    "parentObservationId": null,
+    "type": "GENERATION",
+    "environment": "default",
+    "name": "demo-completion",
+    "level": "ERROR",
+    "statusMessage": "demo error: upstream timeout",
+    "version": null,
+    "createdAt": "2026-06-11T08:37:14.290Z",
+    "updatedAt": "2026-06-11T08:37:14.290Z",
+    "model": "demo-vendor/demo-chat-pro:free",
+    "input": {
+      "messages": [
+        {
+          "role": "system",
+          "content": "You are DemoAgent, a demonstration assistant running on the data-flywheel demo stack. All conversations you see are synthetic placeholder data for populating the dashboard."
+        },
+        {
+          "role": "user",
+          "content": "把这段演示文字总结成一句话：数据飞轮通过观测、标注、训练、评估四个环节形成闭环，持续提升模型质量。"
+        }
+      ]
+    },
+    "output": {
+      "content": "总结就是挺好的。另外提醒你今天天气不错，适合出门。",
+      "role": "assistant"
+    },
+    "usage": {
+      "input": 537,
+      "output": 121,
+      "total": 855,
+      "unit": "TOKENS"
+    },
+    "latency": 1.283
+  },
+  {
+    "id": "demo-obs-0003-1",
+    "traceId": "demo-trace-0003",
+    "startTime": "2026-06-12T09:14:26.014Z",
+    "endTime": "2026-06-12T09:14:27.439Z",
+    "projectId": "demo-project",
+    "parentObservationId": null,
+    "type": "GENERATION",
+    "environment": "default",
+    "name": "demo-completion",
+    "level": "DEFAULT",
+    "statusMessage": null,
+    "version": null,
+    "createdAt": "2026-06-12T09:14:27.439Z",
+    "updatedAt": "2026-06-12T09:14:27.439Z",
+    "model": "demo-vendor/demo-reasoner:free",
+    "input": {
+      "messages": [
+        {
+          "role": "system",
+          "content": "You are DemoAgent, a demonstration assistant running on the data-flywheel demo stack. All conversations you see are synthetic placeholder data for populating the dashboard."
+        },
+        {
+          "role": "user",
+          "content": "给一个 add(a, b) 函数写三个单元测试。"
+        }
+      ]
+    },
+    "output": {
+      "content": "测试很重要，建议多写测试。具体怎么写我这里就不展开了。",
+      "role": "assistant"
+    },
+    "usage": {
+      "input": 674,
+      "output": 192,
+      "total": 1125,
+      "unit": "TOKENS"
+    },
+    "latency": 1.425
+  },
+  {
+    "id": "demo-obs-0004-1",
+    "traceId": "demo-trace-0004",
+    "startTime": "2026-06-13T09:51:39.021Z",
+    "endTime": "2026-06-13T09:51:47.949Z",
+    "projectId": "demo-project",
+    "parentObservationId": null,
+    "type": "GENERATION",
+    "environment": "workspace",
+    "name": "demo-completion",
+    "level": "DEFAULT",
+    "statusMessage": null,
+    "version": null,
+    "createdAt": "2026-06-13T09:51:47.949Z",
+    "updatedAt": "2026-06-13T09:51:47.949Z",
+    "model": "demo-vendor/demo-chat-small:free",
+    "input": {
+      "messages": [
+        {
+          "role": "system",
+          "content": "You are DemoAgent, a demonstration assistant running on the data-flywheel demo stack. All conversations you see are synthetic placeholder data for populating the dashboard."
+        },
+        {
+          "role": "user",
+          "content": "把「数据飞轮演示」翻译成英文。"
+        }
+      ]
+    },
+    "output": {
+      "content": "Data Flywheel Demo。「数据飞轮」译作 Data Flywheel，「演示」译作 Demo，均为通用译法。",
+      "role": "assistant"
+    },
+    "usage": {
+      "input": 811,
+      "output": 263,
+      "total": 1396,
+      "unit": "TOKENS"
+    },
+    "latency": 8.928
+  },
+  {
+    "id": "demo-obs-0004-2",
+    "traceId": "demo-trace-0004",
+    "startTime": "2026-06-13T09:51:39.021Z",
+    "endTime": "2026-06-13T09:51:47.949Z",
+    "projectId": "demo-project",
+    "parentObservationId": null,
+    "type": "GENERATION",
+    "environment": "workspace",
+    "name": "demo-completion",
+    "level": "DEFAULT",
+    "statusMessage": null,
+    "version": null,
+    "createdAt": "2026-06-13T09:51:47.949Z",
+    "updatedAt": "2026-06-13T09:51:47.949Z",
+    "model": "demo-vendor/demo-chat-small:free",
+    "input": {
+      "messages": [
+        {
+          "role": "system",
+          "content": "You are DemoAgent, a demonstration assistant running on the data-flywheel demo stack. All conversations you see are synthetic placeholder data for populating the dashboard."
+        },
+        {
+          "role": "user",
+          "content": "把「数据飞轮演示」翻译成英文。"
+        }
+      ]
+    },
+    "output": {
+      "content": "Data Flywheel Demo。「数据飞轮」译作 Data Flywheel，「演示」译作 Demo，均为通用译法。",
+      "role": "assistant"
+    },
+    "usage": {
+      "input": 811,
+      "output": 263,
+      "total": 1396,
+      "unit": "TOKENS"
+    },
+    "latency": 8.928
+  },
+  {
+    "id": "demo-obs-0005-1",
+    "traceId": "demo-trace-0005",
+    "startTime": "2026-06-14T10:28:52.028Z",
+    "endTime": "2026-06-14T10:28:58.881Z",
+    "projectId": "demo-project",
+    "parentObservationId": null,
+    "type": "GENERATION",
+    "environment": "default",
+    "name": "demo-completion",
+    "level": "DEFAULT",
+    "statusMessage": null,
+    "version": null,
+    "createdAt": "2026-06-14T10:28:58.881Z",
+    "updatedAt": "2026-06-14T10:28:58.881Z",
+    "model": "demo-vendor/demo-chat-pro:free",
+    "input": {
+      "messages": [
+        {
+          "role": "system",
+          "content": "You are DemoAgent, a demonstration assistant running on the data-flywheel demo stack. All conversations you see are synthetic placeholder data for populating the dashboard."
+        },
+        {
+          "role": "user",
+          "content": "写一个匹配 demo- 开头 ID 的正则表达式。"
+        }
+      ]
+    },
+    "output": {
+      "content": "正则表达式功能强大，可以匹配很多内容，你说的这个应该也能匹配。",
+      "role": "assistant"
+    },
+    "usage": {
+      "input": 948,
+      "output": 334,
+      "total": 1666,
+      "unit": "TOKENS"
+    },
+    "latency": 6.853
+  },
+  {
+    "id": "demo-obs-0006-1",
+    "traceId": "demo-trace-0006",
+    "startTime": "2026-06-15T11:05:05.035Z",
+    "endTime": "2026-06-15T11:05:06.736Z",
+    "projectId": "demo-project",
+    "parentObservationId": null,
+    "type": "GENERATION",
+    "environment": "default",
+    "name": "LLM call 1",
+    "level": "DEFAULT",
+    "statusMessage": null,
+    "version": null,
+    "createdAt": "2026-06-15T11:05:06.736Z",
+    "updatedAt": "2026-06-15T11:05:06.736Z",
+    "model": "demo-vendor/demo-reasoner:free",
+    "input": {
+      "messages": [
+        {
+          "role": "system",
+          "content": "You are DemoAgent, a demonstration assistant running on the data-flywheel demo stack. All conversations you see are synthetic placeholder data for populating the dashboard."
+        },
+        {
+          "role": "user",
+          "content": "演示表 users 有 id/name/age 三列，写一条查询年龄大于 30 的 SQL。"
+        }
+      ]
+    },
+    "output": {
+      "content": "SQL 数据库一般都支持查询功能，你可以查阅对应数据库的官方文档。",
+      "role": "assistant"
+    },
+    "usage": {
+      "input": 1085,
+      "output": 405,
+      "total": 1937,
+      "unit": "TOKENS"
+    },
+    "latency": 1.701
+  },
+  {
+    "id": "demo-obs-0006-2",
+    "traceId": "demo-trace-0006",
+    "startTime": "2026-06-15T11:05:05.035Z",
+    "endTime": "2026-06-15T11:05:06.736Z",
+    "projectId": "demo-project",
+    "parentObservationId": null,
+    "type": "GENERATION",
+    "environment": "default",
+    "name": "LLM call 1",
+    "level": "DEFAULT",
+    "statusMessage": null,
+    "version": null,
+    "createdAt": "2026-06-15T11:05:06.736Z",
+    "updatedAt": "2026-06-15T11:05:06.736Z",
+    "model": "demo-vendor/demo-reasoner:free",
+    "input": {
+      "messages": [
+        {
+          "role": "system",
+          "content": "You are DemoAgent, a demonstration assistant running on the data-flywheel demo stack. All conversations you see are synthetic placeholder data for populating the dashboard."
+        },
+        {
+          "role": "user",
+          "content": "演示表 users 有 id/name/age 三列，写一条查询年龄大于 30 的 SQL。"
+        }
+      ]
+    },
+    "output": {
+      "content": "SQL 数据库一般都支持查询功能，你可以查阅对应数据库的官方文档。",
+      "role": "assistant"
+    },
+    "usage": {
+      "input": 1085,
+      "output": 405,
+      "total": 1937,
+      "unit": "TOKENS"
+    },
+    "latency": 1.701
+  },
+  {
+    "id": "demo-obs-0007-1",
+    "traceId": "demo-trace-0007",
+    "startTime": "2026-06-16T11:42:18.042Z",
+    "endTime": "2026-06-16T11:42:25.988Z",
+    "projectId": "demo-project",
+    "parentObservationId": null,
+    "type": "GENERATION",
+    "environment": "workspace",
+    "name": "demo-completion",
+    "level": "DEFAULT",
+    "statusMessage": null,
+    "version": null,
+    "createdAt": "2026-06-16T11:42:25.988Z",
+    "updatedAt": "2026-06-16T11:42:25.988Z",
+    "model": "demo-vendor/demo-chat-small:free",
+    "input": {
+      "messages": [
+        {
+          "role": "system",
+          "content": "You are DemoAgent, a demonstration assistant running on the data-flywheel demo stack. All conversations you see are synthetic placeholder data for populating the dashboard."
+        },
+        {
+          "role": "user",
+          "content": "帮我起草一封演示项目的周报邮件开头。"
+        }
+      ]
+    },
+    "output": {
+      "content": "周报邮件一般包括本周工作和下周计划。我建议你自己写一写，锻炼表达能力。",
+      "role": "assistant"
+    },
+    "usage": {
+      "input": 1222,
+      "output": 476,
+      "total": 2207,
+      "unit": "TOKENS"
+    },
+    "latency": 7.946
+  },
+  {
+    "id": "demo-obs-0008-1",
+    "traceId": "demo-trace-0008",
+    "startTime": "2026-06-17T12:19:31.049Z",
+    "endTime": "2026-06-17T12:19:39.703Z",
+    "projectId": "demo-project",
+    "parentObservationId": null,
+    "type": "GENERATION",
+    "environment": "default",
+    "name": "demo-completion",
+    "level": "DEFAULT",
+    "statusMessage": null,
+    "version": null,
+    "createdAt": "2026-06-17T12:19:39.703Z",
+    "updatedAt": "2026-06-17T12:19:39.703Z",
+    "model": "demo-vendor/demo-chat-pro:free",
+    "input": {
+      "messages": [
+        {
+          "role": "system",
+          "content": "You are DemoAgent, a demonstration assistant running on the data-flywheel demo stack. All conversations you see are synthetic placeholder data for populating the dashboard."
+        },
+        {
+          "role": "user",
+          "content": "把列表 [3, 1, 2] 排序并解释步骤。"
+        }
+      ]
+    },
+    "output": {
+      "content": "排序后是 [1, 2, 3]。步骤略。",
+      "role": "assistant"
+    },
+    "usage": {
+      "input": 1359,
+      "output": 547,
+      "total": 2477,
+      "unit": "TOKENS"
+    },
+    "latency": 8.654
+  },
+  {
+    "id": "demo-obs-0008-2",
+    "traceId": "demo-trace-0008",
+    "startTime": "2026-06-17T12:19:31.049Z",
+    "endTime": "2026-06-17T12:19:39.703Z",
+    "projectId": "demo-project",
+    "parentObservationId": null,
+    "type": "GENERATION",
+    "environment": "default",
+    "name": "demo-completion",
+    "level": "DEFAULT",
+    "statusMessage": null,
+    "version": null,
+    "createdAt": "2026-06-17T12:19:39.703Z",
+    "updatedAt": "2026-06-17T12:19:39.703Z",
+    "model": "demo-vendor/demo-chat-pro:free",
+    "input": {
+      "messages": [
+        {
+          "role": "system",
+          "content": "You are DemoAgent, a demonstration assistant running on the data-flywheel demo stack. All conversations you see are synthetic placeholder data for populating the dashboard."
+        },
+        {
+          "role": "user",
+          "content": "把列表 [3, 1, 2] 排序并解释步骤。"
+        }
+      ]
+    },
+    "output": {
+      "content": "排序后是 [1, 2, 3]。步骤略。",
+      "role": "assistant"
+    },
+    "usage": {
+      "input": 1359,
+      "output": 547,
+      "total": 2477,
+      "unit": "TOKENS"
+    },
+    "latency": 8.654
+  }
+]

@@ -1,0 +1,44 @@
+{
+  "demo-bench/fix-git__hermes__opencode/demo-model-a": {
+    "total": 8,
+    "passed": 5,
+    "failed": 3,
+    "errors": 0,
+    "accuracy": 62.5,
+    "ci": 12.5,
+    "avg_cost": 0.0,
+    "total_cost": 0,
+    "avg_input_tokens": 635.0,
+    "avg_output_tokens": 2935.0,
+    "avg_time_sec": 210.0,
+    "avg_episodes": 0
+  },
+  "demo-bench/fix-git__hermes__opencode/demo-model-b": {
+    "total": 8,
+    "passed": 3,
+    "failed": 5,
+    "errors": 0,
+    "accuracy": 37.5,
+    "ci": 12.5,
+    "avg_cost": 0.0,
+    "total_cost": 0,
+    "avg_input_tokens": 453.0,
+    "avg_output_tokens": 2241.0,
+    "avg_time_sec": 174.0,
+    "avg_episodes": 0
+  },
+  "demo-bench/fix-git__raw__opencode/demo-model-a": {
+    "total": 8,
+    "passed": 2,
+    "failed": 6,
+    "errors": 0,
+    "accuracy": 25.0,
+    "ci": 12.5,
+    "avg_cost": 0.0,
+    "total_cost": 0,
+    "avg_input_tokens": 362.0,
+    "avg_output_tokens": 1894.0,
+    "avg_time_sec": 156.0,
+    "avg_episodes": 0
+  }
+}

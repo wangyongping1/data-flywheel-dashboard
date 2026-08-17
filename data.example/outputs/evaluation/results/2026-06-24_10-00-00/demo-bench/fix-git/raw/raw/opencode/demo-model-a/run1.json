@@ -1,0 +1,7 @@
+{
+  "task": "demo-bench/fix-git",
+  "agent": "raw",
+  "model": "opencode/demo-model-a",
+  "run_id": 1,
+  "reward": 1.0
+}

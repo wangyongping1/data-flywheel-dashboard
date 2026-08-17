@@ -1,0 +1,26 @@
+services:
+  backend:
+    build: ./backend
+    container_name: flywheel-backend
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./data:/app/data
+      - ${TRAINING_DIR:-./training}:/data/training
+    environment:
+      - FLYWHEEL_ROOT=/app
+      - FLYWHEEL_DATA_DIR=/app/data
+      - TRAINING_DIR=/data/training
+      - AI_ANNOTATOR_API_KEY=${AI_ANNOTATOR_API_KEY:-}
+      - AI_ANNOTATOR_API_BASE=${AI_ANNOTATOR_API_BASE:-https://api.deepseek.com/v1}
+      - AI_ANNOTATOR_MODEL=${AI_ANNOTATOR_MODEL:-deepseek-chat}
+    restart: unless-stopped
+
+  frontend:
+    build: ./frontend
+    container_name: flywheel-frontend
+    ports:
+      - "8080:80"
+    depends_on:
+      - backend
+    restart: unless-stopped

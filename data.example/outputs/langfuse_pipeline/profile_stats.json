@@ -1,0 +1,9 @@
+{
+  "observationCount": 600,
+  "traceCount": 300,
+  "sessionCount": 0,
+  "generationObservationCount": 450,
+  "tracesWithErrors": 51,
+  "totalTokens": 1409080,
+  "totalCost": 0.0
+}

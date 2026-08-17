@@ -1,0 +1,36 @@
+# ===== 密钥 & 环境配置 =====
+.env
+*.local
+
+# ===== 工具内部数据 =====
+.workbuddy/
+
+# ===== Python =====
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+
+# ===== Node / 前端 =====
+node_modules/
+dist/
+frontend/node_modules/
+frontend/dist/
+frontend/public/eval-lab/
+
+# ===== 系统 & 编辑器 =====
+.DS_Store
+Thumbs.db
+*.log
+
+# ===== 构建产物 =====
+*.tsbuildinfo
+
+# ===== 真实数据（含生产对话 trace，严禁入库）=====
+# 克隆后运行 scripts/init_demo_data.ps1 把 data.example/ 拷贝为 data/ 即可演示
+data/
+training/alpaca_dataset.json
+training/runs/
+
+# ===== 内部交接文档 =====
+HANDOFF.md
