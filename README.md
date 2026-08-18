@@ -94,7 +94,19 @@ python pipelines/evaluation/import_evaluation.py --source "<evaluation-runner-ro
 
 ## 快速开始
 
-### 后端
+### Docker 启动（推荐）
+
+```bash
+docker compose up --build
+```
+
+- 前端访问：http://localhost:8080
+- 后端 API：http://localhost:8000
+- `./data` 与 `./training` 自动挂载到容器，无需额外配置
+
+### 本地开发（可选）
+
+后端：
 
 ```bash
 cd backend
@@ -102,7 +114,7 @@ pip install -r requirements.txt
 uvicorn main:app --reload --host 127.0.0.1 --port 8000
 ```
 
-### 前端
+前端：
 
 ```bash
 cd frontend
