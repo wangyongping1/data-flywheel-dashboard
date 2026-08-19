@@ -77,6 +77,29 @@ python pipelines/feedback_extraction/import_langfuse.py --source "<langfuse-expo
 | `data/imports/langfuse/` | 保留本次导入的 Langfuse 原始导出、数据管线输出和脚本副本 |
 | `data/outputs/langfuse_pipeline/` | 后端默认读取的标准化输出，如 `trace_summary.csv`、`annotation_batch.csv`、`training_dataset.jsonl` |
 
+### 直连 Langfuse API（推荐）
+
+无需外部导出，直接调 Langfuse REST API 拉数据并跑完整管线：
+
+```bash
+python pipelines/feedback_extraction/fetch_and_import.py
+```
+
+前置配置 `.env`：
+
+```bash
+LANGFUSE_HOST=https://agentos.hqzyai.com
+LANGFUSE_PUBLIC_KEY=pk-lf-xxx      # Langfuse 项目设置 -> API Keys
+LANGFUSE_SECRET_KEY=sk-lf-xxx
+LANGFUSE_API_PATH_PREFIX=          # 空 = 标准 /api/public；若反向代理填 /ai-observability
+LANGFUSE_FETCH_DAYS=30              # 时间窗口
+LANGFUSE_ANNOTATION_BATCH_SIZE=300  # 候选样本数
+```
+
+流程：调 `/api/public/observations` 拉数据 → 生成临时 `config.local.json` → 复用 01/02/03 脚本聚合 → 产出 `trace_summary.csv` / `annotation_batch.csv` / `training_dataset.jsonl` → 拷贝到 `data/outputs/langfuse_pipeline/`。
+
+如果 `data/imports/langfuse/langfuse-dataset-pipeline/scripts/` 不存在，会自动从 `data.example` 拷贝脚本副本。命令行参数可覆盖 `.env`：`--host`、`--public-key`、`--secret-key`、`--path-prefix`、`--days`、`--batch-size`。
+
 ### 导入评估结果
 
 ```bash
