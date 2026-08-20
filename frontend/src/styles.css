@@ -163,6 +163,7 @@ nav.pill-nav button.active {
 .source-static { background: var(--gray-bg); color: var(--gray-text); }
 .source-demo { background: var(--orange-bg); color: var(--orange); }
 .source-pending { background: var(--yellow-bg); color: var(--yellow); }
+.source-stale { background: var(--gray-bg); color: var(--orange); }
 
 /* ---------- 卡片通用 ---------- */
 .card {

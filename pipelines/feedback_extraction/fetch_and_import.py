@@ -33,12 +33,15 @@ from pathlib import Path
 from langfuse_client import LangfuseClient, save_observations_json
 
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
-PIPELINE_DIR = PROJECT_ROOT / "data" / "imports" / "langfuse" / "langfuse-dataset-pipeline"
+# data 根目录：支持 FLYWHEEL_DATA_DIR 覆盖（backend 容器内为 /app/project_data）
+DATA_DIR = Path(os.getenv("FLYWHEEL_DATA_DIR") or (PROJECT_ROOT / "data"))
+PIPELINE_DIR = DATA_DIR / "imports" / "langfuse" / "langfuse-dataset-pipeline"
 SCRIPTS_DIR = PIPELINE_DIR / "scripts"
-EXPORT_DIR = PIPELINE_DIR / "langfuse-export-artifacts"
+# 物化目录：与 backend/config.py 的 LANGFUSE_EXPORT_DIR 对齐（data/imports/langfuse/langfuse-export-artifacts）
+EXPORT_DIR = DATA_DIR / "imports" / "langfuse" / "langfuse-export-artifacts"
 OUTPUTS_DIR = PIPELINE_DIR / "outputs"
-TARGET_OUTPUTS_DIR = PROJECT_ROOT / "data" / "outputs" / "langfuse_pipeline"
-IMPORT_ROOT = PROJECT_ROOT / "data" / "imports" / "langfuse"
+TARGET_OUTPUTS_DIR = DATA_DIR / "outputs" / "langfuse_pipeline"
+IMPORT_ROOT = DATA_DIR / "imports" / "langfuse"
 
 PIPELINE_OUTPUT_FILES = [
     "trace_summary.csv",
@@ -100,7 +103,7 @@ def write_temp_config(annotation_batch_size: int) -> Path:
     """生成临时 config.local.json，让 01/02/03 脚本读项目内路径。
 
     common_config.py 用 Path(__file__).resolve().parents[2] 作为 REPO_ROOT，
-    即 scripts 目录往上 3 级 = PIPELINE_DIR。config.local.json 放在这里。
+    即 scripts 目录往上 3 级 = data/imports/langfuse。config.local.json 放在这里。
     """
     config = {
         "export": {
@@ -119,8 +122,9 @@ def write_temp_config(annotation_batch_size: int) -> Path:
             "training_dataset_csv": "training_dataset.csv",
         },
     }
-    PIPELINE_DIR.mkdir(parents=True, exist_ok=True)
-    config_path = PIPELINE_DIR / "config.local.json"
+    scripts_repo_root = SCRIPTS_DIR.parents[1]
+    scripts_repo_root.mkdir(parents=True, exist_ok=True)
+    config_path = scripts_repo_root / "config.local.json"
     config_path.write_text(
         json.dumps(config, ensure_ascii=False, indent=2), encoding="utf-8"
     )

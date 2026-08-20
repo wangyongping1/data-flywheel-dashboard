@@ -1,5 +1,5 @@
 // 数据来源标签 key（后端返回英文，前端映射到中文）
-export type SourceLabel = "real" | "static" | "demo" | "pending";
+export type SourceLabel = "real" | "static" | "demo" | "pending" | "stale";
 
 export interface ValueMetric {
   key: string;
@@ -193,8 +193,8 @@ export interface TrainingDetailResponse {
   source: SourceLabel;
 }
 
-async function fetchJSON<T>(url: string): Promise<T> {
-  const res = await fetch(url);
+async function fetchJSON<T>(url: string, init?: RequestInit): Promise<T> {
+  const res = await fetch(url, init);
   if (!res.ok) throw new Error(`API error: ${res.status}`);
   return res.json();
 }
@@ -207,6 +207,13 @@ export const api = {
   verticalEvaluations: () => fetchJSON<VerticalEvaluationsResponse>("/api/flywheel/evaluations/vertical"),
   observations: () => fetchJSON<ObservationsResponse>("/api/flywheel/observations"),
   training: () => fetchJSON<TrainingDetailResponse>("/api/flywheel/training"),
+  triggerLangfuseSync: (forceFull = false) =>
+    fetchJSON<{ status: string; job_id: string; message: string }>("/api/import/langfuse", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ force_full: forceFull }),
+    }),
+  langfuseSyncJobs: () => fetchJSON<{ jobs: any[] }>("/api/import/jobs"),
 };
 
 // 数据来源标签中文映射
@@ -215,4 +222,5 @@ export const SOURCE_LABEL_TEXT: Record<SourceLabel, string> = {
   static: "静态快照",
   demo: "Demo 数据",
   pending: "待接入",
+  stale: "数据过期",
 };

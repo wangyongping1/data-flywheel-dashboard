@@ -2,25 +2,31 @@
 
 认证：HTTP Basic Auth (public_key : secret_key)
 端点：GET /api/public/observations
-分页：limit + page
-时间过滤：fromTimestamp / toTimestamp (ISO 8601)
+分页：limit + page（Langfuse API 为 1 起始）
+时间过滤：fromTimestamp / toTimestamp (ISO 8601)；增量用 fromUpdatedAt
 响应：{data: [...], meta: {page, pageSize, totalItems, totalPages}}
+
+实现：http.client 标准库（容器内 urllib 连 Langfuse 有坑，http.client 已验证可行；
+不依赖 requests，保持 backend 镜像无需额外安装包）。
 
 用法：
     client = LangfuseClient(host, public_key, secret_key, path_prefix="")
     for obs in client.fetch_observations(from_time, to_time):
         ...
+    for obs in client.fetch_observations(from_updated_at=ts):
+        ...
 """
 from __future__ import annotations
 
+import base64
+import http.client
 import json
+import ssl
 import time
+import urllib.parse
 from datetime import datetime
 from pathlib import Path
 from typing import Iterator, Optional
-
-import requests
-from requests.auth import HTTPBasicAuth
 
 
 class LangfuseClient:
@@ -37,7 +43,9 @@ class LangfuseClient:
     ):
         self.host = host.rstrip("/")
         self.path_prefix = path_prefix.strip("/")
-        self.auth = HTTPBasicAuth(public_key, secret_key)
+        self.auth_header = "Basic " + base64.b64encode(
+            f"{public_key}:{secret_key}".encode()
+        ).decode()
         self.request_timeout = request_timeout
         self.rate_limit_delay = rate_limit_delay
         prefix = f"/{self.path_prefix}" if self.path_prefix else ""
@@ -46,32 +54,61 @@ class LangfuseClient:
     def _build_url(self, endpoint: str) -> str:
         return f"{self.api_base}/{endpoint.lstrip('/')}"
 
+    @staticmethod
+    def _parse_host(url: str) -> tuple[str, int, str, bool]:
+        """把 URL 解析为 (host, port, path, is_https)。兼容 http/https。"""
+        parsed = urllib.parse.urlsplit(url)
+        is_https = parsed.scheme == "https"
+        port = parsed.port or (443 if is_https else 80)
+        return parsed.hostname or "", port, parsed.path or "/", is_https
+
     def _request(self, endpoint: str, params: Optional[dict] = None) -> dict:
         url = self._build_url(endpoint)
-        response = requests.get(
-            url,
-            params=params or {},
-            auth=self.auth,
-            timeout=self.request_timeout,
-            headers={"Accept": "application/json"},
-        )
-        response.raise_for_status()
-        if self.rate_limit_delay > 0:
-            time.sleep(self.rate_limit_delay)
-        return response.json()
+        if params:
+            url = f"{url}?{urllib.parse.urlencode(params)}"
+        host, port, path, is_https = self._parse_host(url)
+
+        ctx = ssl.create_default_context()
+        if is_https:
+            conn = http.client.HTTPSConnection(
+                host, port, timeout=self.request_timeout, context=ctx
+            )
+        else:
+            conn = http.client.HTTPConnection(host, port, timeout=self.request_timeout)
+        try:
+            conn.request(
+                "GET",
+                path + ("?" + urllib.parse.urlencode(params) if params else ""),
+                headers={
+                    "Accept": "application/json",
+                    "Authorization": self.auth_header,
+                },
+            )
+            resp = conn.getresponse()
+            body = resp.read().decode("utf-8")
+            if resp.status >= 400:
+                raise http.client.HTTPException(f"HTTP {resp.status}: {body[:200]}")
+            if self.rate_limit_delay > 0:
+                time.sleep(self.rate_limit_delay)
+            return json.loads(body)
+        finally:
+            conn.close()
 
     def fetch_observations(
         self,
         from_time: Optional[datetime] = None,
         to_time: Optional[datetime] = None,
+        from_updated_at: Optional[datetime] = None,
         limit: int = 100,
     ) -> Iterator[dict]:
-        """分页拉取 observations，逐条 yield。"""
-        page = 0
+        """分页拉取 observations，逐条 yield。page 从 1 起（Langfuse API 1 起始）。"""
+        page = 1
         total_pages = None
-        while total_pages is None or page < total_pages:
+        while total_pages is None or page <= total_pages:
             params: dict = {"limit": limit, "page": page}
-            if from_time:
+            if from_updated_at:
+                params["fromUpdatedAt"] = from_updated_at.isoformat()
+            elif from_time:
                 params["fromTimestamp"] = from_time.isoformat()
             if to_time:
                 params["toTimestamp"] = to_time.isoformat()
@@ -99,10 +136,10 @@ class LangfuseClient:
         to_time: Optional[datetime] = None,
         limit: int = 100,
     ) -> Iterator[dict]:
-        """分页拉取 traces，逐条 yield（备用，主流程不用）。"""
-        page = 0
+        """分页拉取 traces，逐条 yield（备用，主流程不用）。page 从 1 起。"""
+        page = 1
         total_pages = None
-        while total_pages is None or page < total_pages:
+        while total_pages is None or page <= total_pages:
             params: dict = {"limit": limit, "page": page}
             if from_time:
                 params["fromTimestamp"] = from_time.isoformat()
@@ -129,7 +166,7 @@ class LangfuseClient:
     def test_connection(self) -> dict:
         """测试连接，拉 1 条 observation 验证凭证与路径。"""
         try:
-            data = self._request("observations", {"limit": 1, "page": 0})
+            data = self._request("observations", {"limit": 1, "page": 1})
             return {
                 "status": "ok",
                 "host": self.host,
@@ -137,10 +174,10 @@ class LangfuseClient:
                 "api_base": self.api_base,
                 "total_items": data.get("meta", {}).get("totalItems", 0),
             }
-        except requests.HTTPError as exc:
+        except http.client.HTTPException as exc:
             return {
                 "status": "error",
-                "error": f"HTTP {exc.response.status_code}: {exc.response.text[:200]}",
+                "error": str(exc),
                 "api_base": self.api_base,
             }
         except Exception as exc:  # noqa: BLE001

@@ -5,16 +5,27 @@ services:
     ports:
       - "8000:8000"
     volumes:
-      # 数据文件挂到 /app/project_data，避免覆盖 backend/data/ 这个 Python 包
       - ./data:/app/project_data
+      - ./pipelines:/app/pipelines
       - ${TRAINING_DIR:-./training}:/data/training
     environment:
       - FLYWHEEL_ROOT=/app
       - FLYWHEEL_DATA_DIR=/app/project_data
       - TRAINING_DIR=/data/training
+      - PYTHONPATH=/app:/app/pipelines/feedback_extraction
       - AI_ANNOTATOR_API_KEY=${AI_ANNOTATOR_API_KEY:-}
       - AI_ANNOTATOR_API_BASE=${AI_ANNOTATOR_API_BASE:-https://api.deepseek.com/v1}
       - AI_ANNOTATOR_MODEL=${AI_ANNOTATOR_MODEL:-deepseek-chat}
+      - LANGFUSE_HOST=${LANGFUSE_HOST:-http://nova-langfuse:3000}
+      - LANGFUSE_PUBLIC_KEY=${LANGFUSE_PUBLIC_KEY:-}
+      - LANGFUSE_SECRET_KEY=${LANGFUSE_SECRET_KEY:-}
+      - LANGFUSE_API_PATH_PREFIX=${LANGFUSE_API_PATH_PREFIX:-}
+      - LANGFUSE_SYNC_ENABLED=${LANGFUSE_SYNC_ENABLED:-0}
+      - LANGFUSE_SYNC_INTERVAL_SECONDS=${LANGFUSE_SYNC_INTERVAL_SECONDS:-300}
+      - LANGFUSE_STALE_AFTER_SECONDS=${LANGFUSE_STALE_AFTER_SECONDS:-900}
+    networks:
+      - default
+      - deploy_default
     restart: unless-stopped
 
   frontend:
@@ -25,3 +36,7 @@ services:
     depends_on:
       - backend
     restart: unless-stopped
+
+networks:
+  deploy_default:
+    external: true

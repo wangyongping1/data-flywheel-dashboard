@@ -28,7 +28,8 @@ Thumbs.db
 
 # ===== 真实数据（含生产对话 trace，严禁入库）=====
 # 克隆后运行 scripts/init_demo_data.ps1 把 data.example/ 拷贝为 data/ 即可演示
-data/
+# 注意：只忽略仓库根 data/，backend/data/ 是核心代码必须入库
+/data/
 training/alpaca_dataset.json
 training/runs/
 
